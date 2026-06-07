@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright (c) Meta Platforms, Inc. and affiliates.
  * All rights reserved.
  *
@@ -33,6 +33,7 @@ namespace Meta.XR.BuildingBlocks.AIBlocks
     {
         [SerializeField] private GameObject boundingBoxPrefab;
         [SerializeField] private bool showBoundingBoxes = true;
+        public bool isActive = false;
 
         private float[] _depthBuf;
         private Matrix4x4[] _vpBuf;
@@ -113,6 +114,17 @@ namespace Meta.XR.BuildingBlocks.AIBlocks
             _agent.OnBoxesUpdated -= HandleBatch;
             _depth.OnDepthTextureUpdateCPU -= OnDepth;
             ReturnBuffers();
+
+            // Clear visuals on disable
+            foreach (var g in _live)
+            {
+                if (g)
+                {
+                    g.SetActive(false);
+                    _pool.Enqueue(g);
+                }
+            }
+            _live.Clear();
         }
 
         private void ReturnBuffers()
@@ -170,6 +182,11 @@ namespace Meta.XR.BuildingBlocks.AIBlocks
             }
 
             _live.Clear();
+
+            if (!isActive)
+            {
+                return;
+            }
 
 #if MRUK_INSTALLED
             if (!boundingBoxPrefab)

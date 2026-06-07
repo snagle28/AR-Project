@@ -1,3 +1,4 @@
+using Meta.XR.BuildingBlocks.AIBlocks;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -10,6 +11,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject objectDetectionPuzzle;
 
     GameObject puzzle;
+
+    int selection;
 
     // singleton bs
     private static GameManager Manager;
@@ -26,11 +29,23 @@ public class GameManager : MonoBehaviour
         }
 
     }
-        // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+    private void OnDestroy()
+    {
+        if (Manager == this)
+        {
+            puzzleCompleted.RemoveAllListeners();
+        }
+    }
+
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         puzzleCompleted.AddListener(onPuzzleCompleted);
-        int selection = Random.Range(0, 3);
+        //selection = Random.Range(0, 4);
+        selection = 3;
+
+        Debug.Log("GameManager: Started. selection=" + selection);
 
         switch (selection)
         {
@@ -44,21 +59,46 @@ public class GameManager : MonoBehaviour
                 puzzle = Instantiate(splatPuzzle);
                 break;
             case 3:
-                puzzle = Instantiate(objectDetectionPuzzle);
+                puzzle = objectDetectionPuzzle;
+                if (puzzle != null)
+                {
+                    var visualizer = puzzle.GetComponent<EditedObjectDetectionVisualizer>();
+                    if (visualizer != null) visualizer.isActive = true;
+                }
                 break;
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
         
+        if (puzzle != null)
+        {
+            Debug.Log("GameManager: Active puzzle is " + puzzle.name);
+        }
     }
 
     void onPuzzleCompleted()
     {
-        Debug.Log("GUH");
-        puzzle.SetActive(false);
-        //objectDetection.SetActive(false);
+        Debug.Log("GameManager: onPuzzleCompleted triggered!");
+        if (puzzle != null)
+        {
+            Debug.Log("GameManager: Disabling puzzle " + puzzle.name);
+            
+            // Specifically handle Object Detection Visualizer if it exists
+            var visualizer = puzzle.GetComponent<EditedObjectDetectionVisualizer>();
+            if (visualizer != null)
+            {
+                visualizer.isActive = false;
+                visualizer.ShowBoundingBoxes = false;
+            }
+
+            puzzle.SetActive(false);
+        }
+        else
+        {
+            Debug.LogWarning("GameManager: onPuzzleCompleted called but current puzzle is null!");
+            // Safety: Try to find the object detection puzzle anyway if the event fired
+            if (objectDetectionPuzzle != null)
+            {
+                objectDetectionPuzzle.SetActive(false);
+            }
+        }
     }
 }

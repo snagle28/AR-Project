@@ -1,8 +1,8 @@
 // ============================================================
-//  hw2_script.cs  —  YOUR FILE
+//  hw2_script.cs  ï¿½  YOUR FILE
 //
 //  Fill in the two methods below.
-//  All setup code is handled by hw2Base.cs — you do not need to read it.
+//  All setup code is handled by hw2Base.cs ï¿½ you do not need to read it.
 // ============================================================
 
 using UnityEngine;
@@ -11,18 +11,18 @@ using Oculus.Interaction;
 public class raySelect : hwBase2
 {
     // ================================================================
-    //  TODO #1 — Change the object color based on the ray state
+    //  TODO #1 ï¿½ Change the object color based on the ray state
     // ================================================================
     //
     //  This method is called automatically whenever the ray state changes.
     //
     //  Variables to use:
     //    args.NewState                (InteractableStateChangeArgs) current ray state
-    //    InteractableState.Hover      constant — ray is pointing at this object
-    //    InteractableState.Select     constant — ray trigger is held down
+    //    InteractableState.Hover      constant ï¿½ ray is pointing at this object
+    //    InteractableState.Select     constant ï¿½ ray trigger is held down
     //    hoverColor                   (Color) color to apply on Hover
     //    selectColor                  (Color) color to apply on Select
-    //    m_OriginalColor              (Color) original color — restore this on any other state
+    //    m_OriginalColor              (Color) original color ï¿½ restore this on any other state
     //    m_Renderer.material.color    (Color) set this to actually change the visible color
     //
     //  Structure:
@@ -45,6 +45,7 @@ public class raySelect : hwBase2
         else if (args.NewState == InteractableState.Select)
         {
             m_Renderer.material.color = selectColor;
+            Debug.Log("raySelect: " + gameObject.name + " SELECT state reached. Invoking GameManager.puzzleCompleted.");
             GameManager.puzzleCompleted.Invoke();
         }
         else
@@ -54,7 +55,7 @@ public class raySelect : hwBase2
     }
 
     // ================================================================
-    //  TODO #2 — Scale the object based on two-hand distance
+    //  TODO #2 ï¿½ Scale the object based on two-hand distance
     // ================================================================
     //
     //  This method is called every frame while two hands are grabbing.
