@@ -25,6 +25,7 @@ public class MemoryGame : MonoBehaviour
     [SerializeField] private AudioClip cardsMatchedSound;
     [SerializeField] private AudioClip countdownSound;
     [SerializeField] private AudioClip puzzleWinSound;
+    public static event Action OnGameWon;
 
     private int _initialCardCount;
 
@@ -170,6 +171,7 @@ public class MemoryGame : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
         PlaySound(puzzleWinSound);
+        OnGameWon?.Invoke();
     }
 
     

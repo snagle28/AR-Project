@@ -6,12 +6,17 @@ using Oculus.Interaction;
 public class hw2Skeleton : hw2Base
 {
     public bool RightCubeSelected;
+    public static event System.Action OnPuzzleSolved;
 
     protected override void OnRayStateChanged(InteractableStateChangeArgs args)
     {
         if (args.NewState == InteractableState.Select)
         {
-            RightCubeSelected = true;
+            if (!RightCubeSelected)
+            {
+                RightCubeSelected = true;
+                OnPuzzleSolved?.Invoke();
+            }
         }
     }
 
