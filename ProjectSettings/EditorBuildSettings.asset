@@ -5,10 +5,18 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Main Scene.unity
     guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 0
+    path: Assets/Scenes/test.unity
+    guid: 9c008faa230087443a4f3f9324607f3b
+  - enabled: 1
+    path: Assets/Scenes/ObjectDetectionPuzzleTest.unity
+    guid: be94511c6dab6b34db28048d6c4ab873
   m_configObjects:
+    com.unity.dt.app-ui: {fileID: 11400000, guid: 1b1c20d82303e4b5781c3ef50ac1449f, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+    com.unity.xr.arfoundation.simulation_settings: {fileID: 11400000, guid: 1973fcc2d7695b44dac30f0b75e61f40, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: c46735c7136a9d24bb9086252e3ece98, type: 2}
     com.unity.xr.openxr.settings4: {fileID: 11400000, guid: db69f8c1d15f75f44874259e486d61db, type: 2}

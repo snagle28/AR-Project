@@ -147,6 +147,9 @@ PlayerSettings:
   preloadedAssets:
   - {fileID: 11400000, guid: 44aa384ce86fcbf4a84cd58e7d9ea5e2, type: 2}
   - {fileID: 11400000, guid: 63229704264172d46907b1e7f7602ca1, type: 2}
+  - {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  - {fileID: -8748204378068931506, guid: db69f8c1d15f75f44874259e486d61db, type: 2}
+  - {fileID: -5925621180110874495, guid: c46735c7136a9d24bb9086252e3ece98, type: 2}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   xboxOneDisableKinectGpuReservation: 1
@@ -836,7 +839,7 @@ PlayerSettings:
   webWasm2023: 0
   webEnableSubmoduleStrippingCompatibility: 0
   scriptingDefineSymbols:
-    Android: OVR_DISABLE_HAND_PINCH_BUTTON_MAPPING;USE_INPUT_SYSTEM_POSE_CONTROL;USE_STICK_CONTROL_THUMBSTICKS
+    Android: OVR_DISABLE_HAND_PINCH_BUTTON_MAPPING;USE_INPUT_SYSTEM_POSE_CONTROL;USE_STICK_CONTROL_THUMBSTICKS;SENTIS_ANALYTICS_ENABLED;APP_UI_EDITOR_ONLY
     Standalone: OVR_DISABLE_HAND_PINCH_BUTTON_MAPPING;USE_INPUT_SYSTEM_POSE_CONTROL;USE_STICK_CONTROL_THUMBSTICKS
     Windows Store Apps: USE_INPUT_SYSTEM_POSE_CONTROL;USE_STICK_CONTROL_THUMBSTICKS
   additionalCompilerArguments: {}
@@ -915,7 +918,13 @@ PlayerSettings:
   XboxOneOverrideIdentityName: 
   XboxOneOverrideIdentityPublisher: 
   vrEditorSettings: {}
-  cloudServicesEnabled: {}
+  cloudServicesEnabled:
+    Build: 0
+    Game Performance: 0
+    Legacy Analytics: 0
+    Purchasing: 0
+    UDP: 0
+    Unity Ads: 0
   luminIcon:
     m_Name: 
     m_ModelFolderPath: 
@@ -938,11 +947,11 @@ PlayerSettings:
   activeInputHandler: 1
   windowsGamepadBackendHint: 0
   enableDirectStorage: 0
-  cloudProjectId: 7f86d1de-31af-43ed-9a6d-48ca9df914f6
+  cloudProjectId: f6686ee8-a759-4f09-afe2-952fdd033d35
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
   projectName: ARGroupProject
-  organizationId: lazygeckos
+  organizationId: serenali
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   hmiLoadingImage: {fileID: 0}
