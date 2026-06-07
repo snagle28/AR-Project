@@ -31,7 +31,7 @@ public abstract class hwBase2 : MonoBehaviour, ITransformer
     void Awake()
     {
         m_Renderer = GetComponent<Renderer>();
-        m_OriginalColor = m_Renderer.material.color;
+        //m_OriginalColor = m_Renderer.material.color;
         m_RayInteractable = GetComponentInChildren<RayInteractable>(false);
         m_SavedScale = transform.localScale;
 
@@ -57,20 +57,20 @@ public abstract class hwBase2 : MonoBehaviour, ITransformer
     // On subsequent frames: call ApplyTwoHandScale() (student implements this).
     public void UpdateTransform()
     {
-        var pts = m_Grabbable.GrabPoints;
-        if (pts.Count < 2) return;
+        //var pts = m_Grabbable.GrabPoints;
+        //if (pts.Count < 2) return;
 
-        float currentDist = Vector3.Distance(pts[0].position, pts[1].position);
+        //float currentDist = Vector3.Distance(pts[0].position, pts[1].position);
 
-        if (!m_StretchStarted)
-        {
-            m_InitialHandDistance = currentDist;
-            m_InitialScale = m_SavedScale;
-            m_StretchStarted = true;
-            return;
-        }
+        //if (!m_StretchStarted)
+        //{
+        //    m_InitialHandDistance = currentDist;
+        //    m_InitialScale = m_SavedScale;
+        //    m_StretchStarted = true;
+        //    return;
+        //}
 
-        ApplyTwoHandScale(currentDist); // ? student implements this in hw2_script.cs
+        //ApplyTwoHandScale(currentDist); // ? student implements this in hw2_script.cs
     }
 
     // ?? Abstract methods — students implement these ?????????????

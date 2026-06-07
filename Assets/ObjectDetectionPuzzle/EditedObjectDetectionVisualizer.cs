@@ -35,6 +35,8 @@ namespace Meta.XR.BuildingBlocks.AIBlocks
         [SerializeField] private bool showBoundingBoxes = true;
         public bool isActive = false;
 
+        public List<string> allLabels = new List<string>();
+
         private float[] _depthBuf;
         private Matrix4x4[] _vpBuf;
 
@@ -179,6 +181,7 @@ namespace Meta.XR.BuildingBlocks.AIBlocks
             {
                 g.SetActive(false);
                 _pool.Enqueue(g);
+                
             }
 
             _live.Clear();
@@ -221,12 +224,20 @@ namespace Meta.XR.BuildingBlocks.AIBlocks
                 quad.transform.localScale = scl;
                 _live.Add(quad);
 
+                
+
                 var lbl = _pool.Count > 0 ? _pool.Dequeue() : new GameObject("Label");
                 lbl.SetActive(true);
                 if (lbl.TryGetComponent<Renderer>(out var lr)) lr.enabled = showBoundingBoxes;
 
+                string labelName = b.label.ToString();
+                if (!allLabels.Contains(labelName))
+                {
+                    allLabels.Add(labelName);
+                }
+
                 var tm = lbl.GetComponent<TextMesh>() ?? lbl.AddComponent<TextMesh>();
-                tm.text = b.label;
+                tm.text = labelName;
                 tm.fontSize = 24;
                 tm.characterSize = .02f;
                 tm.anchor = TextAnchor.MiddleCenter;

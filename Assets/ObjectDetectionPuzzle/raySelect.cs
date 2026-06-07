@@ -10,6 +10,7 @@ using Oculus.Interaction;
 
 public class raySelect : hwBase2
 {
+    public string name;
     // ================================================================
     //  TODO #1 � Change the object color based on the ray state
     // ================================================================
@@ -40,17 +41,18 @@ public class raySelect : hwBase2
     {
         if (args.NewState == InteractableState.Hover)
         {
-            m_Renderer.material.color = hoverColor;
+            //m_Renderer.material.color = hoverColor;
         }
         else if (args.NewState == InteractableState.Select)
         {
-            m_Renderer.material.color = selectColor;
+            //m_Renderer.material.color = selectColor;
             Debug.Log("raySelect: " + gameObject.name + " SELECT state reached. Invoking GameManager.puzzleCompleted.");
+            //if ()
             GameManager.puzzleCompleted.Invoke();
         }
         else
         {
-            m_Renderer.material.color = m_OriginalColor;
+            //m_Renderer.material.color = m_OriginalColor;
         }
     }
 
