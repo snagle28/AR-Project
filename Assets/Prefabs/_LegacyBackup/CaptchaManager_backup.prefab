@@ -1,0 +1,135 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5622327416726210750
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4980272271020345400}
+  - component: {fileID: 1458630163983405158}
+  - component: {fileID: 4651305884921423534}
+  - component: {fileID: 6986555700743434940}
+  - component: {fileID: 2085381311409299430}
+  m_Layer: 0
+  m_Name: CaptchaManager_backup
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &4980272271020345400
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5622327416726210750}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1458630163983405158
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5622327416726210750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab24ec9e241904642a6640c05f5335bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpatialCaptchaManager
+  ahaPointFloorMarker: {fileID: 0}
+  userHead: {fileID: 0}
+  shapePool: {fileID: 4651305884921423534}
+  meshGenerator: {fileID: 0}
+  triggerDistance: 0.4
+  timeLimit: 60
+  onSolved:
+    m_PersistentCalls:
+      m_Calls: []
+  onFailed:
+    m_PersistentCalls:
+      m_Calls: []
+  _isSolved: 0
+  _isFailed: 0
+  _remainingTime: 60
+--- !u!114 &4651305884921423534
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5622327416726210750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 563a4851c593548a0982cb3edd015b47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CaptchaShapePool
+  plyShapes:
+  - {fileID: 4900000, guid: d8ea056f96a3b4eafa889431a2b170b4, type: 3}
+  - {fileID: 4900000, guid: a72c55523e4c1470c8a15b9a13364706, type: 3}
+  - {fileID: 4900000, guid: 7c4c0c427edaf44b5b12d2a37017c2bd, type: 3}
+  shapeNameMap:
+  - fileName: 01_doll
+    displayName: Doll
+  - fileName: 02_Key
+    displayName: Key
+  - fileName: 03_Heart
+    displayName: Heart
+  - fileName: Chair
+    displayName: Chair
+  _lastSelectedShape: {fileID: 4900000, guid: d8ea056f96a3b4eafa889431a2b170b4, type: 3}
+--- !u!114 &6986555700743434940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5622327416726210750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4556b061174614dc79a8a94a1b61dd74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CaptchaProximityFeedback
+  userHead: {fileID: 0}
+  ahaPointFloorMarker: {fileID: 0}
+  pointCloudRenderer: {fileID: 0}
+  solvedParticle: {fileID: 0}
+  nearDistance: 0.4
+  midDistance: 1
+  farDistance: 3
+  farColor: {r: 0.4, g: 0.4, b: 0.4, a: 1}
+  midColor: {r: 1, g: 1, b: 1, a: 1}
+  nearColor: {r: 0, g: 0.8, b: 1, a: 1}
+--- !u!114 &2085381311409299430
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5622327416726210750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c1c01973f29346afbfb5b072087c101, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CaptchaAnswerUI
+  captchaManager: {fileID: 1458630163983405158}
+  shapePool: {fileID: 4651305884921423534}
+  answerPanel: {fileID: 0}
+  resultPanel: {fileID: 0}
+  resultText: {fileID: 0}
+  popupDelay: 3
+  allShapeNames:
+  - "\uC5F4\uC1E0"
+  - "\uD558\uD2B8"
+  - "\uC778\uD615"
+  - "\uC758\uC790"

@@ -1,0 +1,111 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5112822001336824674
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5397341762853103456}
+  - component: {fileID: 5695064438659392718}
+  - component: {fileID: 1511282371653944535}
+  m_Layer: 0
+  m_Name: PointCloudAnamorphosis_Heart
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &5397341762853103456
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5112822001336824674}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 2, y: 1.5, z: 2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 7085179583249315115}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+--- !u!114 &5695064438659392718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5112822001336824674}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5e72b47a503c4f1a984cc313b166a1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ViewDependentPointObject
+  ahaPoint: {fileID: 0}
+  pointsParent: {fileID: 7085179583249315115}
+  pointPrefab: {fileID: 2231550184523760090, guid: 752060df03b5e4261a0f51f36b94188e, type: 3}
+  pointCount: 800
+  objectScale: 0.8
+  minDepth: 2
+  maxDepth: 4
+  shapeType: 2
+--- !u!114 &1511282371653944535
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5112822001336824674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d86b23152f4b44204b0d89618756ea80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PLYAnamorphosisGenerator
+  ahaPointView: {fileID: 0}
+  pointsParent: {fileID: 7085179583249315115}
+  pointPrefab: {fileID: 2231550184523760090, guid: 752060df03b5e4261a0f51f36b94188e, type: 3}
+  plyFile: {fileID: 4900000, guid: 7c4c0c427edaf44b5b12d2a37017c2bd, type: 3}
+  objectScale: 0.3
+  maxPoints: 5000
+  useGridSampling: 1
+  gridSize: 0.04
+  minDepth: 2
+  maxDepth: 2.5
+  centerObject: 1
+  generateOnStart: 0
+--- !u!1 &6758125202309977779
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7085179583249315115}
+  m_Layer: 0
+  m_Name: Points
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7085179583249315115
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6758125202309977779}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -1.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5397341762853103456}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
