@@ -1,0 +1,8 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Samples/XR%20Interaction%20Toolkit/3.4.1/World%20Space%20UI/Styles/XRIStyleSheet.uss?fileID=7433441132597879392&amp;guid=3245a7d03283da54db4385c49204e816&amp;type=3#XRIStyleSheet"/>
+    <engine:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0.75); color: rgb(255, 255, 255); padding-left: 10px; padding-top: 10px; padding-right: 10px; padding-bottom: 10px;">
+        <engine:Label text="Color Constancy Test" style="font-size: 24px; -unity-text-align: upper-center;"/>
+        <engine:Label text="Everything is tinted red or blue except for one object in natural color.&#10;&#10;Press A to turn on the color filter mode.&#10;&#10;Press B to switch between red and blue. &#10;&#10;Point at the object that is not affected by the virtual filter. If the wrong object is selected, the puzzle will reset with a randomized initial configuration. " parse-escape-sequences="true" style="font-size: 18px; -unity-text-align: upper-left; height: 306px; width: 331px; overflow: hidden; visibility: visible; text-overflow: clip; white-space: normal;"/>
+        <engine:Button text="Begin!" style="font-size: 25px;"/>
+    </engine:VisualElement>
+</engine:UXML>
