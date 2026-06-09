@@ -8040,9 +8040,6 @@ MonoBehaviour:
   hasTriedRedFilter: 0
   hasTriedBlueFilter: 0
   interactionManager: {fileID: 0}
-  failPanel: {fileID: 0}
-  successPanel: {fileID: 0}
-  failDisplayDuration: 5
 --- !u!114 &1245283266
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12377,7 +12374,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PuzzleSpawner
   puzzlePrefabs:
-  - {fileID: 5646545761818000863, guid: e57d142c037d6f84798f6bce4190282a, type: 3}
+  - {fileID: 5241679515924828871, guid: 75cdd475b5c4047fead905eb6b992857, type: 3}
   spawnDistance: 1.2
   spawnOnStart: 1
   playerCamera: {fileID: 603325638}

@@ -9,14 +9,15 @@ public class WrongCubeSelection : hw2Base
 
     protected override void OnRayStateChanged(InteractableStateChangeArgs args)
     {
-        if (args.NewState == InteractableState.Select && filterManager.HasTriedBothFilters)
+        if (args.NewState == InteractableState.Select)
         {
             rightCubeVariable.RightCubeSelected = false;
             print("Wrong Cube Selected");
             print("resetting cubes and variables");
+            filterManager.ShowFailPanel();
             filterManager.resetCubes();
         }
-    }
+}
     
 
     protected override void ApplyTwoHandScale(float currentDist)

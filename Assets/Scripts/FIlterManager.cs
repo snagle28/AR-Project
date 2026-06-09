@@ -38,6 +38,13 @@ public class FilterManager : MonoBehaviour
 
     public hw2Skeleton interactionManager;
 
+    [Header("UI Panels")]
+    public GameObject failPanel;
+    public GameObject successPanel;
+    public float failDisplayDuration = 5f;
+
+    private Coroutine failCoroutine;
+
     //https://developer.oculus.com/documentation/unity/unity-passthrough-color-mapping
     //https://developer.oculus.com/reference/unity/latest/class_o_v_r_passthrough_layer
 
@@ -45,6 +52,9 @@ public class FilterManager : MonoBehaviour
     {
         if (passthroughLayer == null) passthroughLayer = UnityEngine.Object.FindAnyObjectByType<OVRPassthroughLayer>();
         if (userTransform == null) userTransform = Camera.main?.transform;
+
+        if (failPanel != null) failPanel.SetActive(false);
+        if (successPanel != null) successPanel.SetActive(false);
 
         //first, randomize the cube starting locations
 resetCubes();
@@ -157,10 +167,54 @@ resetCubes();
         }
     }
 
+    public void ShowFailPanel()
+    {
+        if (failPanel == null) return;
+        
+        PositionPanel(failPanel);
+
+        if (failCoroutine != null)
+        {
+            StopCoroutine(failCoroutine);
+        }
+        failCoroutine = StartCoroutine(FailSequence());
+    }
+
+    private void PositionPanel(GameObject panel)
+    {
+        if (userTransform != null)
+        {
+            panel.transform.SetParent(userTransform, false);
+            panel.transform.localPosition = new Vector3(0, 0, 0.8f);
+            panel.transform.localRotation = Quaternion.identity;
+        }
+    }
+
+    private System.Collections.IEnumerator FailSequence()
+    {
+        failPanel.SetActive(true);
+        yield return new WaitForSeconds(failDisplayDuration);
+        failPanel.SetActive(false);
+        failCoroutine = null;
+    }
+
+    public void ShowSuccessPanel()
+    {
+        if (successPanel != null)
+        {
+            PositionPanel(successPanel);
+            successPanel.SetActive(true);
+        }
+    }
+
     public void resetCubes()
     {
+        hasTriedRedFilter = false;
+        hasTriedBlueFilter = false;
+        if (interactionManager != null) interactionManager.RightCubeSelected = false;
+
         if (userTransform == null || cubesToReset == null)
-        {
+{
             return;
         }
 
