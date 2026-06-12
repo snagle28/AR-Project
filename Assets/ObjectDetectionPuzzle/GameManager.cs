@@ -87,6 +87,7 @@ public class GameManager : MonoBehaviour
             {
                 visualizer.isActive = false;
                 visualizer.ShowBoundingBoxes = false;
+                visualizer.textcan.SetActive(false);
             }
 
             puzzle.SetActive(false);

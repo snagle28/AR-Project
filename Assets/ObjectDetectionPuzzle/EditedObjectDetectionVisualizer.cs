@@ -20,7 +20,9 @@
 
 using System.Buffers;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using Meta.XR.EnvironmentDepth;
+using TMPro;
 using Unity.Collections;
 using UnityEngine;
 
@@ -33,7 +35,10 @@ namespace Meta.XR.BuildingBlocks.AIBlocks
     {
         [SerializeField] private GameObject boundingBoxPrefab;
         [SerializeField] private bool showBoundingBoxes = true;
+        public GameObject textcan;
         public bool isActive = false;
+        private bool picked = false;
+        private string targetObject = "";
 
         public List<string> allLabels = new List<string>();
 
@@ -77,9 +82,11 @@ namespace Meta.XR.BuildingBlocks.AIBlocks
 
         private ObjectDetectionAgent _agent;
         private readonly List<GameObject> _live = new();
-        private readonly Queue<GameObject> _pool = new();
+        private readonly Queue<GameObject> _quadPool = new();
+        private readonly Queue<GameObject> _labelPool = new();
+
 #if MRUK_INSTALLED
-        private PassthroughCameraAccess _cam;
+private PassthroughCameraAccess _cam;
         private DepthTextureAccess _depth;
         private int _eyeIdx;
 
@@ -107,6 +114,9 @@ namespace Meta.XR.BuildingBlocks.AIBlocks
 #if MRUK_INSTALLED
         private void OnEnable()
         {
+            allLabels.Clear();
+            picked = false;
+            targetObject = "";
             _agent.OnBoxesUpdated += HandleBatch;
             _depth.OnDepthTextureUpdateCPU += OnDepth;
         }
@@ -123,7 +133,8 @@ namespace Meta.XR.BuildingBlocks.AIBlocks
                 if (g)
                 {
                     g.SetActive(false);
-                    _pool.Enqueue(g);
+                    if (g.name == "Label") _labelPool.Enqueue(g);
+                    else _quadPool.Enqueue(g);
                 }
             }
             _live.Clear();
@@ -179,9 +190,9 @@ namespace Meta.XR.BuildingBlocks.AIBlocks
         {
             foreach (var g in _live)
             {
+                if (g.name == "Label") _labelPool.Enqueue(g);
+                else _quadPool.Enqueue(g);
                 g.SetActive(false);
-                _pool.Enqueue(g);
-                
             }
 
             _live.Clear();
@@ -198,6 +209,25 @@ namespace Meta.XR.BuildingBlocks.AIBlocks
                 return;
             }
 
+            // Pre-process to update label list and check for win condition trigger
+            foreach (var b in batch)
+            {
+                string labelName = b.label.ToString();
+                if (!allLabels.Contains(labelName))
+                {
+                    allLabels.Add(labelName);
+                    if (allLabels.Count >= 3 && !picked)
+                    {
+                        targetObject = allLabels[Random.Range(0, allLabels.Count)];
+                        picked = true;
+                        textcan.SetActive(true);
+                        string result = Regex.Replace(targetObject, @"\d", "");
+                        textcan.GetComponentInChildren<TextMeshProUGUI>().text = "Click on the " + result;
+                        Debug.Log($"[ObjectDetection] 3 objects detected! Target is: {result}");
+                    }
+                }
+            }
+
             foreach (var b in batch)
             {
                 var xmin = b.position.x;
@@ -210,11 +240,10 @@ namespace Meta.XR.BuildingBlocks.AIBlocks
                     continue;
                 }
 
-                var quad = _pool.Count > 0 ? _pool.Dequeue() : Instantiate(boundingBoxPrefab);
-                quad.SetActive(true);
-
+                var quad = _quadPool.Count > 0 ? _quadPool.Dequeue() : Instantiate(boundingBoxPrefab);
                 var rc = quad.GetComponent<RendererCache>() ?? quad.AddComponent<RendererCache>();
                 rc.EnsureInitialized();
+
                 foreach (var r in rc.renderers)
                 {
                     if (r) r.enabled = showBoundingBoxes;
@@ -222,29 +251,34 @@ namespace Meta.XR.BuildingBlocks.AIBlocks
 
                 quad.transform.SetPositionAndRotation(pos, rot);
                 quad.transform.localScale = scl;
+                
+                if (picked)
+                {
+                    quad.SetActive(true);
+                    if (rc.selectionScript != null)
+                    {
+                        rc.selectionScript.objectLabel = b.label.ToString();
+                        rc.selectionScript.targetName = targetObject;
+                    }
+                }
+                
                 _live.Add(quad);
 
+                //var lbl = _labelPool.Count > 0 ? _labelPool.Dequeue() : new GameObject("Label");
+                //lbl.name = "Label";
+                //lbl.SetActive(true);
                 
+                //if (lbl.TryGetComponent<Renderer>(out var lr)) lr.enabled = showBoundingBoxes;
 
-                var lbl = _pool.Count > 0 ? _pool.Dequeue() : new GameObject("Label");
-                lbl.SetActive(true);
-                if (lbl.TryGetComponent<Renderer>(out var lr)) lr.enabled = showBoundingBoxes;
+                //var tm = lbl.GetComponent<TextMesh>() ?? lbl.AddComponent<TextMesh>();
+                //tm.text = b.label.ToString();
+                //tm.fontSize = 24;
+                //tm.characterSize = .02f;
+                //tm.anchor = TextAnchor.MiddleCenter;
+                //tm.alignment = TextAlignment.Center;
 
-                string labelName = b.label.ToString();
-                if (!allLabels.Contains(labelName))
-                {
-                    allLabels.Add(labelName);
-                }
-
-                var tm = lbl.GetComponent<TextMesh>() ?? lbl.AddComponent<TextMesh>();
-                tm.text = labelName;
-                tm.fontSize = 24;
-                tm.characterSize = .02f;
-                tm.anchor = TextAnchor.MiddleCenter;
-                tm.alignment = TextAlignment.Center;
-
-                lbl.transform.SetPositionAndRotation(pos + Vector3.up * .02f, rot);
-                _live.Add(lbl);
+                //lbl.transform.SetPositionAndRotation(pos + Vector3.up * .02f, rot);
+                //_live.Add(lbl);
             }
 #endif
         }
@@ -326,6 +360,7 @@ namespace Meta.XR.BuildingBlocks.AIBlocks
         private sealed class RendererCache : MonoBehaviour
         {
             public Renderer[] renderers;
+            public raySelect selectionScript;
 
             private void Awake()
             {
@@ -338,7 +373,12 @@ namespace Meta.XR.BuildingBlocks.AIBlocks
                 {
                     renderers = GetComponentsInChildren<Renderer>(true);
                 }
+
+                if (selectionScript == null)
+                {
+                    selectionScript = GetComponentInChildren<raySelect>(true);
+                }
             }
         }
-    }
+}
 }
